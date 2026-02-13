@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sanjay ❤️ Aparna</title>
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3, #ff4d6d);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+    transition: opacity 1s ease;
+}
+
+/* Fade transition */
+.fade-out {
+    opacity: 0;
+}
+
+/* Floating hearts */
+.heart {
+    position: absolute;
+    font-size: 20px;
+    animation: float 8s linear infinite;
+    color: white;
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-10vh); opacity: 0; }
+}
+
+.container {
+    text-align: center;
+    color: white;
+}
+
+.crown {
+    font-size: 50px;
+    animation: sparkle 1.5s infinite alternate;
+}
+
+@keyframes sparkle {
+    from { text-shadow: 0 0 5px gold; }
+    to { text-shadow: 0 0 20px yellow; }
+}
+
+/* Typewriter */
+.typewriter {
+    font-size: 45px;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid white;
+    width: 0;
+    margin: 10px auto;
+    animation: typing 3s steps(25, end) forwards,
+               blink 0.8s infinite;
+}
+
+@keyframes typing {
+    from { width: 0 }
+    to { width: 350px }
+}
+
+@keyframes blink {
+    50% { border-color: transparent }
+}
+
+p {
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+/* Buttons */
+button {
+    margin-top: 30px;
+    padding: 15px 35px;
+    font-size: 18px;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(45deg, #ff4e50, #f9d423);
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255,255,255,0.7);
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 40px white;
+}
+
+/* Romantic popup message box */
+.popup {
+    position: absolute;
+    bottom: 40px;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 18px;
+    color: white;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: 0.5s ease;
+    box-shadow: 0 0 20px rgba(255,255,255,0.5);
+}
+
+.popup.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    
+    <div class="crown">👑</div>
+
+    <h1 class="typewriter">Hey My Love 💖</h1>
+
+    <p>Happy Valentine's Day Thangooo 😘<br>
+    Will you be mine forever? 💍✨</p>
+
+    <div>
+        <button onclick="goNext()">YES 💖</button>
+        <button id="noBtn" style="background:#444;margin-left:15px;">NO 😏</button>
+    </div>
+
+</div>
+
+<div id="popup" class="popup"></div>
+
+<script>
+
+/* Floating hearts */
+for(let i=0;i<25;i++){
+    let heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="❤️";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration=(5+Math.random()*5)+"s";
+    document.body.appendChild(heart);
+}
+
+/* YES transition */
+function goNext(){
+    document.body.classList.add("fade-out");
+    setTimeout(()=>{
+        window.location.href="page2.html";
+    },1000);
+}
+
+/* NO button logic */
+let noBtn = document.getElementById("noBtn");
+let popup = document.getElementById("popup");
+
+let messages = [
+    "Think properly da 😌",
+    "You belong to Aparna 😏",
+    "Wrong option 😌",
+    "Only YES works here king 👑"
+];
+
+let index = 0;
+
+noBtn.addEventListener("click", function(e){
+    e.preventDefault();
+
+    popup.innerText = messages[index];
+    popup.classList.add("show");
+
+    setTimeout(()=>{
+        popup.classList.remove("show");
+    },2000);
+
+    index = (index + 1) % messages.length;
+
+    this.style.position = "absolute";
+    this.style.left = Math.random()*80 + "vw";
+    this.style.top = Math.random()*80 + "vh";
+});
+
+</script>
+
+</body>
+</html>

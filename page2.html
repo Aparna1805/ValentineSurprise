@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Our Memories 💖</title>
+
+<style>
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    overflow-x: hidden;
+    transition: opacity 0.8s ease;
+}
+
+/* Falling emojis */
+.fall-item {
+    position: fixed;
+    top: -10px;
+    font-size: 20px;
+    animation: fall linear infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh);
+    }
+}
+
+.container {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.photo-frame {
+    border: 8px solid white;
+    border-radius: 25px;
+    padding: 10px;
+    box-shadow: 0 0 40px rgba(255,255,255,0.7);
+    display: inline-block;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.photo-frame img {
+    width: 350px;
+    height: 450px;
+    border-radius: 20px;
+    object-fit: cover;
+}
+
+.message {
+    margin-top: 15px;
+    font-size: 20px;
+    min-height: 40px;
+}
+
+.counter {
+    margin-top: 5px;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+button {
+    margin-top: 20px;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 40px;
+    font-size: 16px;
+    cursor: pointer;
+    background: linear-gradient(45deg, #ff4e50, #f9d423);
+    color: white;
+    box-shadow: 0 0 20px rgba(255,255,255,0.7);
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 40px white;
+}
+
+.fade {
+    opacity: 0;
+    transform: scale(0.9);
+}
+
+/* Final Gallery */
+.gallery {
+    display: none;
+    margin-top: 30px;
+}
+
+.gallery img {
+    width: 150px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 15px;
+    margin: 10px;
+    border: 4px solid white;
+    box-shadow: 0 0 20px rgba(255,255,255,0.6);
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.final-text {
+    margin-top: 20px;
+    font-size: 22px;
+    min-height: 80px;
+}
+
+/* Surprise Button */
+#surpriseBtn {
+    display: none;
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Our Beautiful Memories 💕</h1>
+
+    <div id="frame" class="photo-frame">
+        <img id="photo" src="photo1.jpeg">
+    </div>
+
+    <div id="text" class="message">
+        The first memory that started everything 💖
+    </div>
+
+    <div id="counter" class="counter">1 / 7</div>
+
+    <br>
+
+    <button onclick="nextMemory()" id="nextBtn">Next Memory 💖</button>
+
+    <div id="gallery" class="gallery"></div>
+
+    <div id="finalMessage" class="final-text"></div>
+
+    <!-- Next Surprise Button -->
+    <button id="surpriseBtn" onclick="goNextSurprise()">Next Surprise 🎁</button>
+
+</div>
+
+<script>
+
+/* 🎀💖✨ Mixed Falling Emojis */
+const emojis = ["🎀","💖","✨"];
+
+function createFallItem() {
+    const item = document.createElement("div");
+    item.classList.add("fall-item");
+    item.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
+
+    item.style.left = Math.random()*100 + "vw";
+    item.style.animationDuration = (4 + Math.random()*4) + "s";
+    item.style.opacity = Math.random();
+
+    document.body.appendChild(item);
+
+    setTimeout(() => {
+        item.remove();
+    }, 8000);
+}
+
+setInterval(createFallItem, 250);
+
+
+/* Slideshow */
+let photos = [
+    { src: "photo1.jpeg", text: "The first memory that started everything 💖" },
+    { src: "photo2.jpeg", text: "Your smile makes my world brighter 😘" },
+    { src: "photo3.jpeg", text: "Every moment with you feels magical ✨" },
+    { src: "photo4.jpeg", text: "You are my peace in every chaos 💕" },
+    { src: "photo5.jpeg", text: "Laughing with you is my favorite thing 😍" },
+    { src: "photo6.jpeg", text: "My heart chooses you again and again 💍" },
+    { src: "photo7.jpeg", text: "Forever starts and ends with you ❤️" }
+];
+
+let index = 0;
+
+function nextMemory() {
+
+    if (index >= photos.length - 1) {
+        startFinalMontage();
+        return;
+    }
+
+    let frame = document.getElementById("frame");
+    let photo = document.getElementById("photo");
+    let text = document.getElementById("text");
+    let counter = document.getElementById("counter");
+
+    frame.classList.add("fade");
+
+    setTimeout(() => {
+        index++;
+        photo.src = photos[index].src;
+        text.innerText = photos[index].text;
+        counter.innerText = (index + 1) + " / 7";
+        frame.classList.remove("fade");
+    }, 400);
+}
+
+function startFinalMontage() {
+
+    document.getElementById("frame").style.display = "none";
+    document.getElementById("text").style.display = "none";
+    document.getElementById("counter").style.display = "none";
+    document.getElementById("nextBtn").style.display = "none";
+
+    let gallery = document.getElementById("gallery");
+    gallery.style.display = "block";
+
+    photos.forEach((p, i) => {
+        let img = document.createElement("img");
+        img.src = p.src;
+        gallery.appendChild(img);
+
+        setTimeout(() => {
+            img.style.opacity = "1";
+            img.style.transform = "scale(1)";
+            img.style.transition = "0.6s ease";
+        }, i * 400);
+    });
+
+    showFinalMessage();
+}
+
+function showFinalMessage() {
+
+    let lines = [
+        "From the first photo… 💖",
+        "To every laugh we shared… 😘",
+        "To every memory we created… ✨",
+        "I will always choose you… 💍",
+        "Again and again… forever. ❤️",
+        "I Love You Thangooo! 💕"
+    ];
+
+    let finalDiv = document.getElementById("finalMessage");
+    let i = 0;
+
+    function showLine() {
+        if (i < lines.length) {
+            let p = document.createElement("div");
+            p.innerText = lines[i];
+            finalDiv.appendChild(p);
+            i++;
+            setTimeout(showLine, 1000);
+        } else {
+            // Show the Next Surprise button after final message
+            const btn = document.getElementById("surpriseBtn");
+            btn.style.display = "inline-block";
+            btn.style.opacity = "0";
+            btn.style.transform = "scale(0.8)";
+            setTimeout(() => {
+                btn.style.transition = "0.5s ease";
+                btn.style.opacity = "1";
+                btn.style.transform = "scale(1)";
+            }, 100);
+        }
+    }
+
+    setTimeout(showLine, photos.length * 400 + 500);
+}
+
+function goNextSurprise() {
+    document.body.style.opacity = "0";
+    setTimeout(() => {
+        window.location.href = "page4.html";
+    }, 800);
+}
+</script>
+
+</body>
+</html>

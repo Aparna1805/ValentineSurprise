@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page 4 - Surprise</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+<style>
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'Dancing Script', cursive;
+  background: linear-gradient(to bottom, #ff9ebc, #ff5f7e);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #fff;
+  position: relative;
+}
+
+.typed-message {
+  font-size: 2em;
+  text-align: center;
+  line-height: 2em;
+  opacity: 0;
+  max-width: 80%;
+  z-index: 2;
+}
+
+/* Floating hearts and gifts */
+.floating {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-size: cover;
+  animation: floatUp 3s ease-out forwards;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(0.5); opacity: 0; }
+  30% { opacity: 1; scale: 1; }
+  100% { transform: translateY(-500px) rotate(360deg); opacity: 0; }
+}
+
+/* Falling petals */
+.petal {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-image: url('https://i.postimg.cc/mDSyq9Lf/rose-petal.png');
+  background-size: cover;
+  pointer-events: none;
+  z-index: 1;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="typed-message" id="message"></div>
+
+<script>
+const messageText = [
+  "Happy Valentine's Day Thangooo 💖",
+  "Ithuku mella ena seiya nu theriyala Thrla avolathan surprise nerla inoonu tharen 💌",
+  "Love you sooo much! Ithuu unaku surprise ah nu thrla ana ithuku na nariya efforts potten 😘",
+  "I loveee youuuu so much Thangooo 💕"
+];
+
+const messageEl = document.getElementById('message');
+
+// Typewriter effect for multiple lines
+function typeLines(lines, element, speed=400) {
+  let lineIndex = 0;
+
+  function typeLine(line, i=0) {
+    if (i < line.length) {
+      element.innerHTML += line[i];
+      if (Math.random() < 0.3) createFloating('https://i.postimg.cc/fbMWbMZ3/heart.png'); // random floating heart
+      setTimeout(() => typeLine(line, i+1), speed / 5);
+    } else {
+      element.innerHTML += '<br><br>';
+      lineIndex++;
+      if (lineIndex < lines.length) {
+        setTimeout(() => typeLine(lines[lineIndex]), speed);
+      }
+    }
+  }
+
+  element.style.opacity = 1;
+  typeLine(lines[lineIndex]);
+}
+
+// Floating hearts
+function createFloating(src){
+  const item = document.createElement('div');
+  item.classList.add('floating');
+  item.style.left = Math.random() * window.innerWidth + 'px';
+  item.style.backgroundImage = `url(${src})`;
+  item.style.animationDuration = (3 + Math.random()*2) + 's';
+  document.body.appendChild(item);
+  setTimeout(()=> item.remove(), 5000);
+}
+
+// Falling petals
+function createPetal() {
+  const petal = document.createElement('div');
+  petal.classList.add('petal');
+  petal.style.left = Math.random() * window.innerWidth + 'px';
+  petal.style.animationDuration = 4 + Math.random()*3 + 's';
+  document.body.appendChild(petal);
+  setTimeout(()=> petal.remove(), 7000);
+}
+setInterval(createPetal, 300);
+
+// Start animation on load
+window.onload = () => {
+  typeLines(messageText, messageEl, 400);
+};
+</script>
+
+</body>
+</html>
